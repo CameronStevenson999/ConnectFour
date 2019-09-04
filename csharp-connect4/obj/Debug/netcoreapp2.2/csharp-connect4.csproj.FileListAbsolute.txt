@@ -1,0 +1,11 @@
+D:\Code\ConnectFour\csharp-connect4\bin\Debug\netcoreapp2.2\csharp-connect4.deps.json
+D:\Code\ConnectFour\csharp-connect4\bin\Debug\netcoreapp2.2\csharp-connect4.runtimeconfig.json
+D:\Code\ConnectFour\csharp-connect4\bin\Debug\netcoreapp2.2\csharp-connect4.runtimeconfig.dev.json
+D:\Code\ConnectFour\csharp-connect4\bin\Debug\netcoreapp2.2\csharp-connect4.dll
+D:\Code\ConnectFour\csharp-connect4\bin\Debug\netcoreapp2.2\csharp-connect4.pdb
+D:\Code\ConnectFour\csharp-connect4\obj\Debug\netcoreapp2.2\csharp-connect4.csprojAssemblyReference.cache
+D:\Code\ConnectFour\csharp-connect4\obj\Debug\netcoreapp2.2\csharp-connect4.csproj.CoreCompileInputs.cache
+D:\Code\ConnectFour\csharp-connect4\obj\Debug\netcoreapp2.2\csharp-connect4.AssemblyInfoInputs.cache
+D:\Code\ConnectFour\csharp-connect4\obj\Debug\netcoreapp2.2\csharp-connect4.AssemblyInfo.cs
+D:\Code\ConnectFour\csharp-connect4\obj\Debug\netcoreapp2.2\csharp-connect4.dll
+D:\Code\ConnectFour\csharp-connect4\obj\Debug\netcoreapp2.2\csharp-connect4.pdb
