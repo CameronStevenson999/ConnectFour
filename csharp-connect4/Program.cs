@@ -6,12 +6,65 @@ namespace csharp_connect4
     {
         static void Main(string[] args)
         {
-            Engine game = new Engine();
+            Engine myNewEngine = new Engine();
 
             Console.WriteLine("Hello World!");
             Console.WriteLine("The current time is " + DateTime.Now);
 
-            game.DisplayGrid();
+            Console.WriteLine("Please enter the board dimensions (number of rows, number of columns)");
+            
+            string strInput = Console.ReadLine();
+            int result = 0;
+            int numberOfRows = 0;
+            int numberOfColumns = 0;
+
+            while (strInput != "quit")
+            {
+                if (int.TryParse(strInput, out result))
+                {
+                    if ((result > 60) || (result < 4))
+                    {
+                        Console.WriteLine("You chose a number that will create invalid board dimensions");
+                        Console.WriteLine("The dimensions need to be between 4 and 60");
+                    }
+                    numberOfRows = result;
+                }
+                else
+                {
+                    Console.WriteLine("Your input ({0}) is not a number", strInput);
+                }
+                Console.WriteLine("Please enter the next number");
+                strInput = Console.ReadLine();
+            }
+
+
+            Console.WriteLine("Please enter the number of columns");
+            
+            strInput = Console.ReadLine();
+            while (strInput != "quit")
+            {
+                if (int.TryParse(strInput, out result))
+                {
+                    if ((result > 60) || (result < 4))
+                    {
+                        Console.WriteLine("You chose a number that will create invalid board dimensions");
+                        Console.WriteLine("The dimensions need to be between 4 and 60");
+                    }
+                    numberOfColumns = result;
+                }
+                else
+                {
+                    Console.WriteLine("Your input ({0}) is not a number", strInput);
+                }
+                Console.WriteLine("Please enter the next number");
+                strInput = Console.ReadLine();
+            }
+
+            myNewEngine.DisplayGrid(numberOfRows, numberOfColumns);
+
+
+            Game myNewGame = new Game();
+            Console.WriteLine($"The game is over! {myNewGame.ReturnMessage()}");
         }
 
     }
@@ -27,15 +80,37 @@ namespace csharp_connect4
 
         public Engine()
         {
+            // grid = new char[NUMBER_OF_ROWS, NUMBER_OF_COLUMNS];
+
+            // for (int y = 0; y < NUMBER_OF_ROWS; y++)
+            //     for(int x = 0; x < NUMBER_OF_COLUMNS; x++)
+            //         grid[y, x] = EMPTY;
+        }
+
+        public void DisplayGrid(int numRows, int numCols)
+        {
+            grid = new char[numRows, numCols];
+
+            for (int y = 0; y < numRows; y++)
+                for(int x = 0; x < numCols; x++)
+                    grid[y, x] = EMPTY;
+
+            for (int y = 0; y < numRows; y++) {
+                for (int x = 0; x < numCols; x++) {
+                    Console.Write(grid[y, x]);
+                    Console.Write(' ');
+                }
+                Console.Write('\n');
+            } 
+        }
+        public void DisplayGridDefault()
+        {
             grid = new char[NUMBER_OF_ROWS, NUMBER_OF_COLUMNS];
 
             for (int y = 0; y < NUMBER_OF_ROWS; y++)
                 for(int x = 0; x < NUMBER_OF_COLUMNS; x++)
                     grid[y, x] = EMPTY;
-        }
 
-        public void DisplayGrid()
-        {
             for (int y = 0; y < NUMBER_OF_ROWS; y++) {
                 for (int x = 0; x < NUMBER_OF_COLUMNS; x++) {
                     Console.Write(grid[y, x]);
