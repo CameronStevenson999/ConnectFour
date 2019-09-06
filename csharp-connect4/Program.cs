@@ -65,7 +65,7 @@ namespace csharp_connect4
 
             Game myNewGame = new Game();
 
-            myNewGame.StartGame();
+            //myNewGame.StartGame();
             myNewGame.StartGameCleanCode();
 
             Console.WriteLine($"The game is over! {myNewGame.ReturnMessage()}");
