@@ -66,6 +66,57 @@ namespace csharp_connect4
         public void StartGameCleanCode() 
         {
             SetupGameBoardDimensions();
+            NextPlayersTurn();
+        }
+
+        static void NextPlayersTurn()
+        {
+            char player = '1';
+
+            int column;
+            bool gameLoop = true;
+            bool inputLoop;
+
+            Engine myNewEngine = new Engine();
+            // myNewEngine.DisplayGrid(5, 5);
+
+            while (gameLoop)
+            {
+                myNewEngine.DisplayGrid(5, 5);
+
+                do {
+                    inputLoop = true;
+                    Console.Write("/nPlayer ");
+                    Console.Write(player);
+                    Console.Write(": ");
+
+                    if (Int32.TryParse(Console.ReadLine(), out column)) {
+                        if (1 <= column && column <= 7) {
+                            // if (game.DropPieceInGrid(player, column)) {
+                            //     inputLoop = false;
+                            // }
+                            // else {
+                            //     System.Console.Clear();
+                            //     game.DisplayGrid();
+                            //     Console.WriteLine("\nThat column is full.");
+                            // }
+                            Console.WriteLine("\nCorrect move.");
+                        }
+                        else {
+                            //System.Console.Clear();
+                            myNewEngine.DisplayGrid(5, 5);
+                            Console.WriteLine("\nThe integer must be between 1 and 7.");
+                        }
+                    }
+                    else {
+                        //System.Console.Clear();
+                        myNewEngine.DisplayGrid(5, 5);
+                        Console.WriteLine("\nPlease enter an integer.");
+                    }                    
+                } while (inputLoop);
+            }
+
+            Console.ReadKey();
         }
 
         static void SetupGameBoardDimensions()
