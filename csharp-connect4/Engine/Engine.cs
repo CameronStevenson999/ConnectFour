@@ -4,7 +4,10 @@ namespace csharp_connect4
 {
     class Engine
     {
-        const int NUMBER_OF_ROWS = 6, NUMBER_OF_COLUMNS = 7;
+        public int NUMBER_OF_ROWS;
+        public int NUMBER_OF_COLUMNS;
+        
+        const int DEFAULT_NUMBER_OF_ROWS = 6, DEFAULT_NUMBER_OF_COLUMNS = 7;
         const char EMPTY = '0', PLAYER1 = '1', PLAYER2 = '2';
 
         private char[,] grid;
@@ -13,20 +16,71 @@ namespace csharp_connect4
 
         public Engine()
         {
-            // grid = new char[NUMBER_OF_ROWS, NUMBER_OF_COLUMNS];
+            GetGameBoardDimensions();
+            BuildGameBoard(NUMBER_OF_ROWS, NUMBER_OF_COLUMNS);
+            DisplayGrid(NUMBER_OF_ROWS, NUMBER_OF_COLUMNS);
+        }
 
-            // for (int y = 0; y < NUMBER_OF_ROWS; y++)
-            //     for(int x = 0; x < NUMBER_OF_COLUMNS; x++)
-            //         grid[y, x] = EMPTY;
+        private void GetGameBoardDimensions()
+        {            
+            bool IsValidRows = false;
+            bool IsValidColumns = false;
+            //string strInput = Console.ReadLine();
+            //int result = 0;
+            //int numberOfRows = 0;
+            //int numberOfColumns = 0;
+
+            // Console.WriteLine("Please enter the board dimensions (number of rows, number of columns) separated by a space.");
+            //Console.WriteLine("Please enter the board dimensions (number of rows, number of columns)");
+
+            while (!IsValidRows && !IsValidColumns)
+            {
+                Console.WriteLine("Please enter the board dimensions (number of rows, number of columns) separated by a space.");
+                
+                string[] boardDimensions = Console.ReadLine().Split();
+
+                if (boardDimensions.Length != 2)
+                {
+                    Console.WriteLine("Please enter row and column values correctly.");
+                    IsValidRows = false;
+                    IsValidColumns = false;
+                }
+                else if (int.TryParse(boardDimensions[0], out NUMBER_OF_ROWS)
+                        && int.TryParse(boardDimensions[1], out NUMBER_OF_COLUMNS))
+                {
+                    if (NUMBER_OF_ROWS < 4 || NUMBER_OF_ROWS > 60 
+                        || NUMBER_OF_COLUMNS < 4 || NUMBER_OF_COLUMNS > 60)
+                    {
+                        Console.WriteLine("You chose a number that will create invalid board dimensions");
+                        Console.WriteLine("The dimensions need to be between 4 and 60");
+                        IsValidRows = false;
+                        IsValidColumns = false;
+                    }
+                    else
+                    {
+                        IsValidRows = true;
+                        IsValidColumns = true;
+                    }
+                }
+            }
+        }
+
+        private void BuildGameBoard(int numRows, int numCols)
+        {
+            grid = new char[NUMBER_OF_ROWS, NUMBER_OF_COLUMNS];
+
+            for (int y = 0; y < NUMBER_OF_ROWS; y++)
+                for(int x = 0; x < NUMBER_OF_COLUMNS; x++)
+                    grid[y, x] = EMPTY;
         }
 
         public void DisplayGrid(int numRows, int numCols)
         {
-            grid = new char[numRows, numCols];
+            // grid = new char[numRows, numCols];
 
-            for (int y = 0; y < numRows; y++)
-                for(int x = 0; x < numCols; x++)
-                    grid[y, x] = EMPTY;
+            // for (int y = 0; y < numRows; y++)
+            //     for(int x = 0; x < numCols; x++)
+            //         grid[y, x] = EMPTY;
 
             for (int y = 0; y < numRows; y++) {
                 for (int x = 0; x < numCols; x++) {

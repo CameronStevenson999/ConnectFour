@@ -65,11 +65,11 @@ namespace csharp_connect4
         // This is required for setting up the board dimensions
         public void StartGameCleanCode() 
         {
-            SetupGameBoardDimensions();
-            NextPlayersTurn();
+            Engine myNewEngine = new Engine();
+            NextPlayersTurn(myNewEngine);
         }
 
-        static void NextPlayersTurn()
+        static void NextPlayersTurn(Engine nextTurnEngine)
         {
             char player = '1';
 
@@ -77,21 +77,18 @@ namespace csharp_connect4
             bool gameLoop = true;
             bool inputLoop;
 
-            Engine myNewEngine = new Engine();
-            // myNewEngine.DisplayGrid(5, 5);
-
             while (gameLoop)
             {
-                myNewEngine.DisplayGrid(5, 5);
+                //nextTurnEngine.DisplayGrid(nextTurnEngine.NUMBER_OF_ROWS, nextTurnEngine.NUMBER_OF_COLUMNS);
 
                 do {
                     inputLoop = true;
-                    Console.Write("/nPlayer ");
+                    Console.Write("\nPlayer ");
                     Console.Write(player);
                     Console.Write(": ");
 
                     if (Int32.TryParse(Console.ReadLine(), out column)) {
-                        if (1 <= column && column <= 7) {
+                        if (1 <= column && column <= nextTurnEngine.NUMBER_OF_COLUMNS) {
                             // if (game.DropPieceInGrid(player, column)) {
                             //     inputLoop = false;
                             // }
@@ -101,17 +98,22 @@ namespace csharp_connect4
                             //     Console.WriteLine("\nThat column is full.");
                             // }
                             Console.WriteLine("\nCorrect move.");
+                            nextTurnEngine.DisplayGrid(nextTurnEngine.NUMBER_OF_ROWS, nextTurnEngine.NUMBER_OF_COLUMNS);
                         }
                         else {
                             //System.Console.Clear();
-                            myNewEngine.DisplayGrid(5, 5);
-                            Console.WriteLine("\nThe integer must be between 1 and 7.");
+                            Console.WriteLine($"\nThe integer must be between 1 and {nextTurnEngine.NUMBER_OF_COLUMNS}.");
+                            nextTurnEngine.DisplayGrid(nextTurnEngine.NUMBER_OF_ROWS, nextTurnEngine.NUMBER_OF_COLUMNS);
                         }
                     }
                     else {
                         //System.Console.Clear();
-                        myNewEngine.DisplayGrid(5, 5);
                         Console.WriteLine("\nPlease enter an integer.");
+                        nextTurnEngine.DisplayGrid(nextTurnEngine.NUMBER_OF_ROWS, nextTurnEngine.NUMBER_OF_COLUMNS);
+                        
+                        Console.WriteLine("\nExiting game.");
+                        gameLoop = false;
+                        inputLoop = false;
                     }                    
                 } while (inputLoop);
             }
@@ -119,52 +121,52 @@ namespace csharp_connect4
             Console.ReadKey();
         }
 
-        static void SetupGameBoardDimensions()
-        {
-            Engine myNewEngine = new Engine();
-            bool IsValidRows = false;
-            bool IsValidColumns = false;
-            //string strInput = Console.ReadLine();
-            //int result = 0;
-            int numberOfRows = 0;
-            int numberOfColumns = 0;
+        // static void SetupGameBoardDimensions()
+        // {
+        //     Engine myNewEngine = new Engine();
+        //     bool IsValidRows = false;
+        //     bool IsValidColumns = false;
+        //     //string strInput = Console.ReadLine();
+        //     //int result = 0;
+        //     int numberOfRows = 0;
+        //     int numberOfColumns = 0;
 
-            // Console.WriteLine("Please enter the board dimensions (number of rows, number of columns) separated by a space.");
-            //Console.WriteLine("Please enter the board dimensions (number of rows, number of columns)");
+        //     // Console.WriteLine("Please enter the board dimensions (number of rows, number of columns) separated by a space.");
+        //     //Console.WriteLine("Please enter the board dimensions (number of rows, number of columns)");
 
-            while (!IsValidRows && !IsValidColumns)
-            {
-                Console.WriteLine("Please enter the board dimensions (number of rows, number of columns) separated by a space.");
+        //     while (!IsValidRows && !IsValidColumns)
+        //     {
+        //         Console.WriteLine("Please enter the board dimensions (number of rows, number of columns) separated by a space.");
                 
-                string[] boardDimensions = Console.ReadLine().Split();
+        //         string[] boardDimensions = Console.ReadLine().Split();
 
-                if (boardDimensions.Length != 2)
-                {
-                    Console.WriteLine("Please enter row and column values correctly.");
-                    IsValidRows = false;
-                    IsValidColumns = false;
-                }
-                else if (int.TryParse(boardDimensions[0], out numberOfRows)
-                        && int.TryParse(boardDimensions[1], out numberOfColumns))
-                {
-                    if (numberOfRows < 4 || numberOfRows > 60 
-                        || numberOfColumns < 4 || numberOfColumns > 60)
-                    {
-                        Console.WriteLine("You chose a number that will create invalid board dimensions");
-                        Console.WriteLine("The dimensions need to be between 4 and 60");
-                        IsValidRows = false;
-                        IsValidColumns = false;
-                    }
-                    else
-                    {
-                        IsValidRows = true;
-                        IsValidColumns = true;
-                    }
-                }
-            }
+        //         if (boardDimensions.Length != 2)
+        //         {
+        //             Console.WriteLine("Please enter row and column values correctly.");
+        //             IsValidRows = false;
+        //             IsValidColumns = false;
+        //         }
+        //         else if (int.TryParse(boardDimensions[0], out numberOfRows)
+        //                 && int.TryParse(boardDimensions[1], out numberOfColumns))
+        //         {
+        //             if (numberOfRows < 4 || numberOfRows > 60 
+        //                 || numberOfColumns < 4 || numberOfColumns > 60)
+        //             {
+        //                 Console.WriteLine("You chose a number that will create invalid board dimensions");
+        //                 Console.WriteLine("The dimensions need to be between 4 and 60");
+        //                 IsValidRows = false;
+        //                 IsValidColumns = false;
+        //             }
+        //             else
+        //             {
+        //                 IsValidRows = true;
+        //                 IsValidColumns = true;
+        //             }
+        //         }
+        //     }
 
-            myNewEngine.DisplayGrid(numberOfRows, numberOfColumns);
-        }
+        //     myNewEngine.DisplayGrid(numberOfRows, numberOfColumns);
+        // }
     
         public string ReturnMessage()
         {
