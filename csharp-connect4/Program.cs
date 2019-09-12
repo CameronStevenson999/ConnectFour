@@ -62,8 +62,8 @@ namespace csharp_connect4
 
             
             //myNewEngine.DisplayGrid(numberOfRows, numberOfColumns);
-
-            Game myNewGame = new Game();
+            Engine myNewEngine = new Engine();
+            Game myNewGame = new Game(myNewEngine);
 
             //myNewGame.StartGame();
             myNewGame.StartGameCleanCode();

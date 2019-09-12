@@ -4,7 +4,12 @@ namespace csharp_connect4
 {
     public class Game
     {
-    
+
+        public Engine engine;
+        public Game(Engine newEngine)
+        {
+            engine = newEngine;
+        }
         public void StartGame()
         {
             Engine myNewEngine = new Engine();
@@ -65,11 +70,10 @@ namespace csharp_connect4
         // This is required for setting up the board dimensions
         public void StartGameCleanCode() 
         {
-            Engine myNewEngine = new Engine();
-            NextPlayersTurn(myNewEngine);
+            NextPlayersTurn();
         }
 
-        static void NextPlayersTurn(Engine nextTurnEngine)
+        void NextPlayersTurn()
         {
             char player = '1';
 
@@ -79,8 +83,6 @@ namespace csharp_connect4
 
             while (gameLoop)
             {
-                //nextTurnEngine.DisplayGrid(nextTurnEngine.NUMBER_OF_ROWS, nextTurnEngine.NUMBER_OF_COLUMNS);
-
                 do {
                     inputLoop = true;
                     Console.Write("\nPlayer ");
@@ -88,7 +90,7 @@ namespace csharp_connect4
                     Console.Write(": ");
 
                     if (Int32.TryParse(Console.ReadLine(), out column)) {
-                        if (1 <= column && column <= nextTurnEngine.NUMBER_OF_COLUMNS) {
+                        if (1 <= column && column <= engine.NUMBER_OF_COLUMNS) {
                             // if (game.DropPieceInGrid(player, column)) {
                             //     inputLoop = false;
                             // }
@@ -97,19 +99,18 @@ namespace csharp_connect4
                             //     game.DisplayGrid();
                             //     Console.WriteLine("\nThat column is full.");
                             // }
-                            Console.WriteLine("\nCorrect move.");
-                            nextTurnEngine.DisplayGrid(nextTurnEngine.NUMBER_OF_ROWS, nextTurnEngine.NUMBER_OF_COLUMNS);
+                            DisplayGridWithMessage("\nCorrect move.");
                         }
                         else {
-                            //System.Console.Clear();
-                            Console.WriteLine($"\nThe integer must be between 1 and {nextTurnEngine.NUMBER_OF_COLUMNS}.");
-                            nextTurnEngine.DisplayGrid(nextTurnEngine.NUMBER_OF_ROWS, nextTurnEngine.NUMBER_OF_COLUMNS);
+                            DisplayGridWithMessage($"\nThe integer must be between 1 and {engine.NUMBER_OF_COLUMNS}.");
+                            //engine.DisplayGrid(engine.NUMBER_OF_ROWS, engine.NUMBER_OF_COLUMNS);
                         }
                     }
                     else {
                         //System.Console.Clear();
-                        Console.WriteLine("\nPlease enter an integer.");
-                        nextTurnEngine.DisplayGrid(nextTurnEngine.NUMBER_OF_ROWS, nextTurnEngine.NUMBER_OF_COLUMNS);
+                        //Console.WriteLine("\nPlease enter an integer.");
+                        DisplayGridWithMessage("\nPlease enter an integer.");
+                        //engine.DisplayGrid(engine.NUMBER_OF_ROWS, engine.NUMBER_OF_COLUMNS);
                         
                         Console.WriteLine("\nExiting game.");
                         gameLoop = false;
@@ -121,52 +122,67 @@ namespace csharp_connect4
             Console.ReadKey();
         }
 
-        // static void SetupGameBoardDimensions()
-        // {
-        //     Engine myNewEngine = new Engine();
-        //     bool IsValidRows = false;
-        //     bool IsValidColumns = false;
-        //     //string strInput = Console.ReadLine();
-        //     //int result = 0;
-        //     int numberOfRows = 0;
-        //     int numberOfColumns = 0;
+        void NextPlayersTurnOldCode()
+        {
+            char player = '1';
 
-        //     // Console.WriteLine("Please enter the board dimensions (number of rows, number of columns) separated by a space.");
-        //     //Console.WriteLine("Please enter the board dimensions (number of rows, number of columns)");
+            int column;
+            bool gameLoop = true;
+            bool inputLoop;
 
-        //     while (!IsValidRows && !IsValidColumns)
-        //     {
-        //         Console.WriteLine("Please enter the board dimensions (number of rows, number of columns) separated by a space.");
-                
-        //         string[] boardDimensions = Console.ReadLine().Split();
+            while (gameLoop)
+            {
+                do {
+                    inputLoop = true;
+                    Console.Write("\nPlayer ");
+                    Console.Write(player);
+                    Console.Write(": ");
 
-        //         if (boardDimensions.Length != 2)
-        //         {
-        //             Console.WriteLine("Please enter row and column values correctly.");
-        //             IsValidRows = false;
-        //             IsValidColumns = false;
-        //         }
-        //         else if (int.TryParse(boardDimensions[0], out numberOfRows)
-        //                 && int.TryParse(boardDimensions[1], out numberOfColumns))
-        //         {
-        //             if (numberOfRows < 4 || numberOfRows > 60 
-        //                 || numberOfColumns < 4 || numberOfColumns > 60)
-        //             {
-        //                 Console.WriteLine("You chose a number that will create invalid board dimensions");
-        //                 Console.WriteLine("The dimensions need to be between 4 and 60");
-        //                 IsValidRows = false;
-        //                 IsValidColumns = false;
-        //             }
-        //             else
-        //             {
-        //                 IsValidRows = true;
-        //                 IsValidColumns = true;
-        //             }
-        //         }
-        //     }
+                    if (Int32.TryParse(Console.ReadLine(), out column)) {
+                        if (1 <= column && column <= engine.NUMBER_OF_COLUMNS) {
+                            // if (game.DropPieceInGrid(player, column)) {
+                            //     inputLoop = false;
+                            // }
+                            // else {
+                            //     System.Console.Clear();
+                            //     game.DisplayGrid();
+                            //     Console.WriteLine("\nThat column is full.");
+                            // }
+                            DisplayGridWithMessage("\nCorrect move.");
+                            engine.DisplayGrid(engine.NUMBER_OF_ROWS, engine.NUMBER_OF_COLUMNS);
+                        }
+                        else {
+                            //System.Console.Clear();
+                            Console.WriteLine($"\nThe integer must be between 1 and {engine.NUMBER_OF_COLUMNS}.");
+                            engine.DisplayGrid(engine.NUMBER_OF_ROWS, engine.NUMBER_OF_COLUMNS);
+                        }
+                    }
+                    else {
+                        //System.Console.Clear();
+                        Console.WriteLine("\nPlease enter an integer.");
+                        engine.DisplayGrid(engine.NUMBER_OF_ROWS, engine.NUMBER_OF_COLUMNS);
+                        
+                        Console.WriteLine("\nExiting game.");
+                        gameLoop = false;
+                        inputLoop = false;
+                    }                    
+                } while (inputLoop);
+            }
 
-        //     myNewEngine.DisplayGrid(numberOfRows, numberOfColumns);
-        // }
+            Console.ReadKey();
+        }
+
+        void DisplayGridWithMessage(string message)
+        {
+            DisplayGrid();
+            Console.WriteLine(message);
+        }
+
+        void DisplayGrid()
+        {
+            engine.DisplayGrid(engine.NUMBER_OF_ROWS, engine.NUMBER_OF_COLUMNS);
+        }
+
     
         public string ReturnMessage()
         {

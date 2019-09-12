@@ -2,7 +2,7 @@ using System;
 
 namespace csharp_connect4
 {
-    class Engine
+    public class Engine
     {
         public int NUMBER_OF_ROWS;
         public int NUMBER_OF_COLUMNS;
