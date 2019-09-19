@@ -89,39 +89,47 @@ namespace csharp_connect4
                     Console.Write(player);
                     Console.Write(": ");
 
-                    if (Int32.TryParse(Console.ReadLine(), out column)) {
-                        if (1 <= column && column <= engine.NUMBER_OF_COLUMNS) {
-                            // if (game.DropPieceInGrid(player, column)) {
-                            //     inputLoop = false;
-                            // }
-                            // else {
-                            //     System.Console.Clear();
-                            //     game.DisplayGrid();
-                            //     Console.WriteLine("\nThat column is full.");
-                            // }
-                            DisplayGridWithMessage("\nCorrect move.");
-                        }
-                        else {
-                            DisplayGridWithMessage($"\nThe integer must be between 1 and {engine.NUMBER_OF_COLUMNS}.");
-                            //engine.DisplayGrid(engine.NUMBER_OF_ROWS, engine.NUMBER_OF_COLUMNS);
-                        }
-                    }
-                    else {
-                        //System.Console.Clear();
-                        //Console.WriteLine("\nPlease enter an integer.");
-                        DisplayGridWithMessage("\nPlease enter an integer.");
-                        //engine.DisplayGrid(engine.NUMBER_OF_ROWS, engine.NUMBER_OF_COLUMNS);
-                        
-                        Console.WriteLine("\nExiting game.");
-                        gameLoop = false;
+                    var userInput = Console.ReadLine();
+
+                    if (IsInputCorrect(userInput))
+                    {
+                        column = 4; // Error here -- need to get column integer correctly
+                        engine.DropPieceInGrid(player, column);
                         inputLoop = false;
-                    }                    
+                        gameLoop = false; // remove this when implemented correctly
+                    }
+                                        
                 } while (inputLoop);
             }
 
             Console.ReadKey();
         }
 
+        bool IsInputCorrect(string userInput)
+        {
+            int column;
+            if (Int32.TryParse(Console.ReadLine(), out column)) 
+            {
+                if (1 <= column && column <= engine.NUMBER_OF_COLUMNS) 
+                {
+                    DisplayGridWithMessage("\nCorrect move.");
+                    return true;
+                }
+                else {
+                    DisplayGridWithMessage($"\nThe integer must be between 1 and {engine.NUMBER_OF_COLUMNS}.");
+                    //engine.DisplayGrid(engine.NUMBER_OF_ROWS, engine.NUMBER_OF_COLUMNS);
+                }
+            }
+            else {
+                //System.Console.Clear();
+                //Console.WriteLine("\nPlease enter an integer.");
+                DisplayGridWithMessage("\nPlease enter an integer.");
+                //engine.DisplayGrid(engine.NUMBER_OF_ROWS, engine.NUMBER_OF_COLUMNS);
+                
+                Console.WriteLine("\nExiting game.");
+            }
+            return false;
+        }
         void NextPlayersTurnOldCode()
         {
             char player = '1';
